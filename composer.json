@@ -25,10 +25,11 @@
             "webappz\\jsonml\\": ["tests"]
         }
     },
- 
+
     "minimum-stability": "dev",
 
-    "repositories": [
+    "bin": [
+        "jsonml.xsd"
     ],
 
     "require": {
