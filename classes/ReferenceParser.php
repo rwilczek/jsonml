@@ -29,6 +29,44 @@ class ReferenceParser implements Parser
     }
 
     /**
+     * Validate the given node against the json::XML Schema
+     * and throw an exception on failure.
+     *
+     * Validates instances of DOMDocument as well as instances of DOMElement.
+     * Validating solitaire instances of DOMAttr however will throw an exception.
+     * They have to be part of a DOMElement to validate.
+     *
+     * @param \DOMNode $node
+     * @throws Exception
+     */
+    public function validate(\DOMNode $node)
+    {
+        if ($node instanceof \DOMAttr ) {
+            throw new Exception('Cannot validate attributes');
+        }
+
+        if (!$node instanceof \DOMDocument) {
+            $dom = new \DOMDocument;
+            $dom->appendChild($dom->importNode($node, true));
+            return $this->validate($dom);
+        }
+
+        $errors = function ($number, $msg, $file, $line)
+        {
+            throw new \ErrorException($msg, 0, $number, $file, $line);
+        };
+
+        $old = set_error_handler($errors);
+        try {
+            $node->schemaValidate(__DIR__ . '/../schema.xsd');
+            set_error_handler($old);
+        } catch (\ErrorException $e) {
+            set_error_handler($old);
+            throw new Exception($e->getMessage(), 0, $e);
+        }
+    }
+
+    /**
      * Convert a PHP-value to a json:XML-element.
      *
      * If the value is an object, it's members will be read using foreach {}.

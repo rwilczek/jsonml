@@ -141,4 +141,44 @@ class ParserTest extends TestCase
             $this->assertSame($value, $result);
         }
     }
+
+    /**
+     * @dataProvider arbitraryValues
+     */
+    public function testValidate($value)
+    {
+        $dom = new \DOMDocument;
+        $dom->appendChild(
+            $dom->importNode($this->parser->encodeXML($value), true)
+        );
+        $this->parser->validate($dom);
+    }
+
+    /**
+     * @dataProvider arbitraryValues
+     */
+    public function testValidateElements($value)
+    {
+        $this->parser->validate($this->parser->encodeXML($value));
+    }
+
+    public function testValidateAttribute()
+    {
+        $value = array('foo' => 'bar');
+        $node  = $this->parser->encodeXML($value);
+        $attr  = $node->firstChild->getAttributeNode('name');
+
+        $this->setExpectedException('webappz\jsonml\Exception', 'Cannot validate attributes');
+        $this->parser->validate($attr);
+    }
+
+    public function testValidationFailure()
+    {
+        $dom = new \DOMDocument;
+        $dom->loadXML('<string>foo</string>'); // invalid or missing namespace here
+
+        $this->setExpectedException('webappz\jsonml\Exception', 'No matching global declaration');
+
+        $this->parser->validate($dom);
+    }
 }
