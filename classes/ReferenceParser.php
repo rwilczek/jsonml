@@ -83,7 +83,7 @@ class ReferenceParser implements Parser
         }
 
         $type = gettype($value);
-        if (in_array($type, array('object', 'array', 'boolean', 'NULL'))) {
+        if (in_array($type, ['object', 'array', 'boolean', 'NULL'])) {
             return $this->{'encode' . $type}($value);
         };
         if ($type == 'resource') {
@@ -131,7 +131,7 @@ class ReferenceParser implements Parser
 
     private function decodeArray(\DOMElement $array)
     {
-        $result = array();
+        $result = [];
         foreach ($array->childNodes as $childNode) {
            $result[] = $this->decodeXML($childNode);
         }
@@ -140,7 +140,7 @@ class ReferenceParser implements Parser
 
     private function decodeObject(\DOMElement $object)
     {
-        $result = array();
+        $result = [];
         foreach ($object->childNodes as $member) {
             /* @var $member \DOMElement */
             $result[$member->getAttribute('name')] = $this->decodeXML($member->firstChild);

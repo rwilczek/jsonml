@@ -158,7 +158,7 @@ class ParserTest extends TestCase
 
     public function testValidateAttribute()
     {
-        $value = array('foo' => 'bar');
+        $value = ['foo' => 'bar'];
         $node  = $this->parser->encodeXML($value);
         $attr  = $node->firstChild->getAttributeNode('name');
 
