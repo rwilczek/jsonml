@@ -12,6 +12,12 @@ namespace webappz\jsonml;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
+    protected function assertIsTypedNode(\DOMNode $node, $type)
+    {
+        $this->assertSame(Parser::NS, $node->namespaceURI);
+        $this->assertSame($type, $node->tagName);
+    }
+
     public static function associativeArrays()
     {
         return array(

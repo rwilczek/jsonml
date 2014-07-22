@@ -22,12 +22,6 @@ class ParserTest extends TestCase
         $this->parser = new ReferenceParser;
     }
 
-    private function assertIsTypedNode(\DOMNode $node, $type)
-    {
-        $this->assertSame(Parser::NS, $node->namespaceURI);
-        $this->assertSame($type, $node->tagName);
-    }
-
     public function testImplementation()
     {
         $this->assertInstanceOf('webappz\jsonml\Parser', $this->parser);
