@@ -168,10 +168,6 @@ class ReferenceParser implements Parser
      */
     private function encodeObject($object)
     {
-        if ($object instanceof \JsonSerializable) {
-            return $this->encodeXML($object->jsonSerialize());
-        }
-
         $element = $this->createElement('object');
         foreach ($object as $name => $value) {
             $member = $this->createElement('member');
