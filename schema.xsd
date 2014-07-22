@@ -45,9 +45,9 @@ link:        http://www.web-appz.de/
                 If you want to, you can add the following restriction
                 to comply with the standard:
                 <!-- 
-                    <xs:restriction base="xs:string">
-                        <xs:pattern value="((\\[^\p{Cc}])|([^\p{Cc}&quot;\\]))*"/>
-                    </xs:restriction>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="((\\[^\p{Cc}])|([^\p{Cc}&quot;\\]))*"/>
+                </xs:restriction>
                 -->
             </xs:documentation>
         </xs:annotation>
