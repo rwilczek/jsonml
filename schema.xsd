@@ -7,14 +7,13 @@ see also: http://www.ietf.org/rfc/rfc4627.txt
 license:     http://opensource.org/licenses/lgpl-2.1.php LGPL 2.1 or higher
 author:      Roland Wilczek <r.wilczek@web-appz.de>
 copyright:   2010 Roland Wilczek
-version:     SVN $Id: jsonXML.xsd 12896 2014-06-21 14:36:06Z rwilczek $
 link:        http://www.web-appz.de/
 -->
 
 <xs:schema 
     xmlns:xs             = "http://www.w3.org/2001/XMLSchema" 
-    xmlns                = "http://web-appz.de/phuzzle/jsonXML" 
-    targetNamespace      = "http://web-appz.de/phuzzle/jsonXML"  
+    xmlns                = "http://web-appz.de/jsonml"
+    targetNamespace      = "http://web-appz.de/jsonml"
     elementFormDefault   = "qualified"
     attributeFormDefault = "unqualified"
 >
