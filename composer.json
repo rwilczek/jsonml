@@ -3,6 +3,17 @@
     "description":  "Provides an XML Schema for JSON-values and a parser to cast PHP-values to schema-aware DOMElements and vice versa.",
     "license":      "LGPL-2.1",
 
+    "authors": [
+        {
+            "name":     "Roland Wilczek",
+            "email":    "r.wilczek@web-appz.de",
+            "homepage": "http://web-appz.de",
+            "role":     "Developer"
+        }
+    ],
+
+    "keywords": ["JSON", "XML", "PHP"],
+
     "autoload": {
         "psr-4": {
             "webappz\\jsonml\\": ["classes"]
