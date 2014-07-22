@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Version: SVN $Id: phpunit.xml.dist 12458 2014-02-06 16:49:28Z rwilczek $ -->
+
+<phpunit bootstrap="bootstrap.php"
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        syntaxCheck="false"
+        processIsolation="false">
+</phpunit>
+

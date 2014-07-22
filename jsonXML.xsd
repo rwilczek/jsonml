@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+JSON-like data-interchange format in XML.
+see also: http://www.ietf.org/rfc/rfc4627.txt
+
+license:     http://opensource.org/licenses/lgpl-2.1.php LGPL 2.1 or higher
+author:      Roland Wilczek <r.wilczek@web-appz.de>
+copyright:   2010 Roland Wilczek
+version:     SVN $Id: jsonXML.xsd 12896 2014-06-21 14:36:06Z rwilczek $
+link:        http://www.web-appz.de/
+-->
+
+<xs:schema 
+    xmlns:xs             = "http://www.w3.org/2001/XMLSchema" 
+    xmlns                = "http://web-appz.de/phuzzle/jsonXML" 
+    targetNamespace      = "http://web-appz.de/phuzzle/jsonXML"  
+    elementFormDefault   = "qualified"
+    attributeFormDefault = "unqualified"
+>
+    <xs:group name="value">
+        <xs:choice>
+            <xs:element ref="string" />
+            <xs:element ref="number" />
+            <xs:element ref="object" />
+            <xs:element ref="array"  />
+            <xs:element ref="true"   />
+            <xs:element ref="false"  />
+            <xs:element ref="null"   />
+        </xs:choice>
+    </xs:group>
+    
+    <xs:element name="true" ><xs:complexType/></xs:element>
+    <xs:element name="false"><xs:complexType/></xs:element>
+    <xs:element name="null" ><xs:complexType/></xs:element>
+    <xs:element name="string" type="xs:string">
+        <xs:annotation>
+            <xs:documentation>
+                The purpose of json:XML is to have comfortable 
+                access to structured data with XML.
+                Restricting the content of json:string according 
+                to the JSON-standard would easily result in an 
+                impediment to this purpose, for a reader of the 
+                node-content would have to decode the escapings 
+                required by the JSON standard.
+                If you want to, you can add the following restriction
+                to comply with the standard:
+                <!-- 
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="((\\[^\p{Cc}])|([^\p{Cc}&quot;\\]))*"/>
+                    </xs:restriction>
+                -->
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    
+    <xs:element name="number">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    
+    <xs:element name="array">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="value"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="object">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="member">
+                    <xs:complexType>
+                        <xs:group ref="value"/>
+                        <xs:attribute name="name" use="required" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

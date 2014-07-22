@@ -1,0 +1,30 @@
+{
+    "name":         "webappz/jsonml",
+    "description":  "Some JSON tools for the web-appz suite",
+    "license":      "LGPL-2.1",
+
+    "autoload": {
+        "psr-4": {
+            "webappz\\jsonml\\": ["classes"]
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "webappz\\jsonml\\": ["tests"]
+        }
+    },
+ 
+    "minimum-stability": "dev",
+
+    "repositories": [
+    ],
+
+    "require": {
+        "php":      "5.3.*",
+        "ext-dom":  "*"
+    },
+
+    "require-dev": {
+    }
+}
