@@ -34,7 +34,7 @@ class ReferenceParser implements Parser
      *
      * Validates instances of DOMDocument as well as instances of DOMElement.
      * Validating solitaire instances of DOMAttr however will throw an exception.
-     * They have to be part of a DOMElement to validate.
+     * Attributes may only be validated within the context of a DOMElement.
      *
      * @param \DOMNode $node
      * @throws Exception
@@ -58,7 +58,7 @@ class ReferenceParser implements Parser
 
         $old = set_error_handler($errors);
         try {
-            $node->schemaValidate(__DIR__ . '/../schema.xsd');
+            $node->schemaValidate(__DIR__ . '/../jsonml.xsd');
             set_error_handler($old);
         } catch (\ErrorException $e) {
             set_error_handler($old);

@@ -42,7 +42,7 @@ interface Parser
      *
      * Validates instances of DOMDocument as well as instances of DOMElement.
      * Validating solitaire instances of DOMAttr however will throw an exception.
-     * They have to be part of a DOMElement to validate.
+     * Attributes may only be validated within the context of a DOMElement.
      *
      * @param \DOMNode $node
      * @throws Exception
