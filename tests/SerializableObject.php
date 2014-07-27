@@ -1,5 +1,5 @@
 <?php
-namespace webappz\jsonml;
+namespace webappz\jsonxml;
 
 class SerializableObject implements \JsonSerializable
 {

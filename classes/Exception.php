@@ -8,7 +8,7 @@
  * @link       http://www.web-appz.de/
  */
 
-namespace webappz\jsonml;
+namespace webappz\jsonxml;
 
 /**
  * An exception thrown from within the Json-package

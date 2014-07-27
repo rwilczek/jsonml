@@ -1,5 +1,5 @@
 {
-    "name":         "webappz/jsonml",
+    "name":         "webappz/jsonxml",
     "description":  "Provides an XML Schema for JSON-values and a parser to cast PHP-values to schema-aware DOMElements and vice versa.",
     "license":      "LGPL-2.1",
 
@@ -16,20 +16,20 @@
 
     "autoload": {
         "psr-4": {
-            "webappz\\jsonml\\": ["classes"]
+            "webappz\\jsonxml\\": ["classes"]
         }
     },
 
     "autoload-dev": {
         "psr-4": {
-            "webappz\\jsonml\\": ["tests"]
+            "webappz\\jsonxml\\": ["tests"]
         }
     },
 
     "minimum-stability": "dev",
 
     "bin": [
-        "jsonml.xsd"
+        "jsonxml.xsd"
     ],
 
     "require": {

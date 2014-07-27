@@ -8,7 +8,7 @@
  * @link       http://www.web-appz.de/
  */
 
-namespace webappz\jsonml;
+namespace webappz\jsonxml;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {

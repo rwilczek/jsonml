@@ -1,6 +1,6 @@
 <?php
 /**
- * Concrete implementation of webappz\jsonml\Json
+ * Concrete implementation of webappz\jsonxml\Parser
  *
  * @license    http://opensource.org/licenses/lgpl-2.1.php LGPL 2.1 or higher
  * @copyright  2012 Roland Wilczek
@@ -8,10 +8,10 @@
  * @link       http://www.web-appz.de/
  */
 
-namespace webappz\jsonml;
+namespace webappz\jsonxml;
 
 /**
- * Concrete implementation of webappz\jsonml\Json
+ * Concrete implementation of webappz\jsonxml\Parser
  */
 class ReferenceParser implements Parser
 {
@@ -21,7 +21,7 @@ class ReferenceParser implements Parser
     private $dom;
 
     /**
-     * Concrete implementation of webappz\jsonml\Json
+     * Concrete implementation of webappz\jsonxml\Parser
      */
     public function __construct()
     {
@@ -29,28 +29,14 @@ class ReferenceParser implements Parser
     }
 
     /**
-     * Validate the given node against the json::XML Schema
+     * Validate the given element against the json::XML Schema
      * and throw an exception on failure.
      *
-     * Validates instances of DOMDocument as well as instances of DOMElement.
-     * Validating solitaire instances of DOMAttr however will throw an exception.
-     * Attributes may only be validated within the context of a DOMElement.
-     *
-     * @param \DOMNode $node
+     * @param \DOMElement $node
      * @throws Exception
      */
-    public function validate(\DOMNode $node)
+    public function validate(\DOMElement $node)
     {
-        if ($node instanceof \DOMAttr ) {
-            throw new Exception('Cannot validate attributes');
-        }
-
-        if (!$node instanceof \DOMDocument) {
-            $dom = new \DOMDocument;
-            $dom->appendChild($dom->importNode($node, true));
-            return $this->validate($dom);
-        }
-
         $errors = function ($number, $msg, $file, $line)
         {
             throw new \ErrorException($msg, 0, $number, $file, $line);
@@ -58,11 +44,13 @@ class ReferenceParser implements Parser
 
         $old = set_error_handler($errors);
         try {
-            $node->schemaValidate(__DIR__ . '/../jsonml.xsd');
-            set_error_handler($old);
+            $dom = new \DOMDocument;
+            $dom->appendChild($dom->importNode($node, true));
+            $dom->schemaValidate(__DIR__ . '/../jsonxml.xsd');
         } catch (\ErrorException $e) {
-            set_error_handler($old);
             throw new Exception($e->getMessage(), 0, $e);
+        } finally {
+            set_error_handler($old);
         }
     }
 
@@ -121,7 +109,6 @@ class ReferenceParser implements Parser
                 return null;
             case 'array':
                 return $this->decodeArray($node);
-                break;
             case 'object':
                 return $this->decodeObject($node);
             default:

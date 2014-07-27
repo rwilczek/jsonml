@@ -12,8 +12,8 @@ link:        http://www.web-appz.de/
 
 <xs:schema 
     xmlns:xs             = "http://www.w3.org/2001/XMLSchema" 
-    xmlns                = "http://web-appz.de/jsonml"
-    targetNamespace      = "http://web-appz.de/jsonml"
+    xmlns                = "http://web-appz.de/jsonxml"
+    targetNamespace      = "http://web-appz.de/jsonxml"
     elementFormDefault   = "qualified"
     attributeFormDefault = "unqualified"
 >
@@ -35,9 +35,9 @@ link:        http://www.web-appz.de/
     <xs:element name="string" type="xs:string">
         <xs:annotation>
             <xs:documentation>
-                The purpose of json:XML is to have comfortable 
+                The purpose of this schema is to have comfortable 
                 access to structured data with XML.
-                Restricting the content of json:string according 
+                Restricting the content of jsonxml:string according 
                 to the JSON-standard would easily result in an 
                 impediment to this purpose, for a reader of the 
                 node-content would have to decode the escapings 

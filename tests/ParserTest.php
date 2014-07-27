@@ -8,7 +8,7 @@
  * @link       http://www.web-appz.de/
  */
 
-namespace webappz\jsonml;
+namespace webappz\jsonxml;
 
 class ParserTest extends TestCase
 {
@@ -24,7 +24,7 @@ class ParserTest extends TestCase
 
     public function testImplementation()
     {
-        $this->assertInstanceOf('webappz\jsonml\Parser', $this->parser);
+        $this->assertInstanceOf(__NAMESPACE__ . '\Parser', $this->parser);
     }
 
     /**
@@ -55,7 +55,7 @@ class ParserTest extends TestCase
     public function testResourceToNode()
     {
         $this->setExpectedException(
-            'webappz\jsonml\Exception',
+            __NAMESPACE__ . '\Exception',
             'Cannot convert'
         );
         $this->parser->encodeXML(fopen(__FILE__, 'r'));
@@ -87,7 +87,7 @@ class ParserTest extends TestCase
         $node = new \DOMElement('string', 'foo', 'http://someNS');
 
         $this->setExpectedException(
-            'webappz\jsonml\Exception',
+            __NAMESPACE__ . '\Exception',
             'Cannot parse unknown namespace'
         );
         $this->parser->decodeXML($node);
@@ -97,7 +97,7 @@ class ParserTest extends TestCase
     {
         $node = new \DOMElement('nonsense', 'foo', Parser::NS);
         $this->setExpectedException(
-            'webappz\jsonml\Exception',
+            __NAMESPACE__ . '\Exception',
             'Cannot parse unknown element'
         );
         $this->parser->decodeXML($node);
@@ -139,31 +139,9 @@ class ParserTest extends TestCase
     /**
      * @dataProvider arbitraryValues
      */
-    public function testValidate($value)
-    {
-        $dom = new \DOMDocument;
-        $dom->appendChild(
-            $dom->importNode($this->parser->encodeXML($value), true)
-        );
-        $this->parser->validate($dom);
-    }
-
-    /**
-     * @dataProvider arbitraryValues
-     */
     public function testValidateElements($value)
     {
         $this->parser->validate($this->parser->encodeXML($value));
-    }
-
-    public function testValidateAttribute()
-    {
-        $value = ['foo' => 'bar'];
-        $node  = $this->parser->encodeXML($value);
-        $attr  = $node->firstChild->getAttributeNode('name');
-
-        $this->setExpectedException('webappz\jsonml\Exception', 'Cannot validate attributes');
-        $this->parser->validate($attr);
     }
 
     public function testValidationFailure()
@@ -171,8 +149,11 @@ class ParserTest extends TestCase
         $dom = new \DOMDocument;
         $dom->loadXML('<string>foo</string>'); // invalid or missing namespace here
 
-        $this->setExpectedException('webappz\jsonml\Exception', 'No matching global declaration');
+        $this->setExpectedException(
+            __NAMESPACE__ . '\Exception',
+            'No matching global declaration'
+        );
 
-        $this->parser->validate($dom);
+        $this->parser->validate($dom->documentElement);
     }
 }
