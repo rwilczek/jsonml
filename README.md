@@ -1,5 +1,6 @@
 jsonxml
 ======
+[![Build Status](https://travis-ci.org/rwilczek/jsonxml.svg?branch=master)](https://travis-ci.org/rwilczek/jsonxml)
 
 Provides an XML Schema for JSON-values and a parser to
  - cast PHP-values to schema-aware DOMElements and vice versa
