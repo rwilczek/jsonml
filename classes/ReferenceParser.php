@@ -47,7 +47,7 @@ class ReferenceParser implements Parser
             $dom = new \DOMDocument;
             $dom->preserveWhiteSpace = false;
             $dom->appendChild($dom->importNode($node, true));
-            $dom->normalize();
+            $dom->normalizeDocument();
             $dom->schemaValidate(__DIR__ . '/../jsonxml.xsd');
         } catch (\ErrorException $e) {
             throw new Exception($e->getMessage(), 0, $e);
