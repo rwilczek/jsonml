@@ -129,7 +129,10 @@ class ReferenceParser implements Parser
     {
         $result = [];
         foreach ($object->childNodes as $member) {
-            /* @var $member \DOMElement */
+            /* @var $member \DOMNode */
+            if ($member instanceof \DOMText) {
+                continue;
+            }
             $result[$member->getAttribute('name')] = $this->decodeXML($member->firstChild);
         }
         return (object) $result;
