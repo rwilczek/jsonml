@@ -251,8 +251,11 @@ class ReferenceParser implements Parser
      * @param string $value
      * @return \DOMElement
      */
-    private function createElement($name, $value = '')
+    private function createElement($name, $value = null)
     {
+        if (is_null($value)) {
+            return $this->dom->createElementNS(self::NS, $name);
+        }
         return $this->dom->createElementNS(self::NS, $name, $value);
     }
 
