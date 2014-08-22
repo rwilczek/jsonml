@@ -45,6 +45,7 @@ class ReferenceParser implements Parser
         $old = set_error_handler($errors);
         try {
             $dom = new \DOMDocument;
+            $dom->preserveWhiteSpace = false;
             $dom->appendChild($dom->importNode($node, true));
             $dom->schemaValidate(__DIR__ . '/../jsonxml.xsd');
         } catch (\ErrorException $e) {
