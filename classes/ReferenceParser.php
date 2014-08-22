@@ -136,7 +136,12 @@ class ReferenceParser implements Parser
             if (!$member instanceof \DOMElement) {
                 continue;
             }
-            $result[$member->getAttribute('name')] = $this->decodeXML($member->firstChild);
+            foreach ($member->childNodes as $childNode) {
+                if ($childNode instanceof \DOMElement) {
+                    $result[$member->getAttribute('name')] = $this->decodeXML($childNode);
+                    break;
+                }
+            }
         }
         return (object) $result;
     }
