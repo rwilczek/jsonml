@@ -128,7 +128,7 @@ class ReferenceParser implements Parser
         return $result;
     }
 
-    private function decodeObject(\DOMElement $object)
+    private function decodeObject(\DOMNode $object)
     {
         $result = [];
         foreach ($object->childNodes as $member) {
