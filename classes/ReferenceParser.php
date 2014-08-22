@@ -45,9 +45,7 @@ class ReferenceParser implements Parser
         $old = set_error_handler($errors);
         try {
             $dom = new \DOMDocument;
-            $dom->preserveWhiteSpace = false;
             $dom->appendChild($dom->importNode($node, true));
-            $dom->normalizeDocument();
             $dom->schemaValidate(__DIR__ . '/../jsonxml.xsd');
         } catch (\ErrorException $e) {
             throw new Exception($e->getMessage(), 0, $e);
@@ -122,28 +120,17 @@ class ReferenceParser implements Parser
     {
         $result = [];
         foreach ($array->childNodes as $childNode) {
-            if (!$childNode instanceof \DOMElement) {
-                continue;
-            }
            $result[] = $this->decodeXML($childNode);
         }
         return $result;
     }
 
-    private function decodeObject(\DOMNode $object)
+    private function decodeObject(\DOMElement $object)
     {
         $result = [];
         foreach ($object->childNodes as $member) {
             /* @var $member \DOMNode */
-            if (!$member instanceof \DOMElement) {
-                continue;
-            }
-            foreach ($member->childNodes as $childNode) {
-                if ($childNode instanceof \DOMElement) {
-                    $result[$member->getAttribute('name')] = $this->decodeXML($childNode);
-                    break;
-                }
-            }
+            $result[$member->getAttribute('name')] = $this->decodeXML($member->firstChild);
         }
         return (object) $result;
     }
@@ -161,7 +148,7 @@ class ReferenceParser implements Parser
         }
         $element = $this->createElement('array');
         /* @var $element \DOMElement */
-        foreach ($values as $key => $value) {
+        foreach ($values as $value) {
             $node = $this->encodeXML($value);
             $element->appendChild($node);
         }
