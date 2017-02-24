@@ -10,9 +10,9 @@
 
 namespace webappz\jsonxml;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected function assertIsTypedNode(\DOMNode $node, $type)
+    protected function assertIsTypedNode(\DOMNode $node, string $type)
     {
         $this->assertSame(Parser::NS, $node->namespaceURI);
         $this->assertSame($type, $node->tagName);

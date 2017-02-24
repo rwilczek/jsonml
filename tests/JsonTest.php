@@ -16,12 +16,12 @@ class JsonTest extends TestCase
      * Converts a JSON encoded string to a PHP value.
      *
      * @param string $json UTF-8 encoded string
-     * @param boolean $assoc convert objects into associative arrays.
-     * @param integer $depth User specified recursion depth.
+     * @param bool $assoc convert objects into associative arrays.
+     * @param int $depth User specified recursion depth.
      * @throws Exception
      * @return mixed
      */
-    private function decode($json, $assoc = false, $depth = 512)
+    private function decode(string $json, bool $assoc = false, int $depth = 512)
     {
         $result = json_decode($json, $assoc, $depth);
         $error  = json_last_error();
@@ -35,11 +35,11 @@ class JsonTest extends TestCase
      * Returns a string containing the JSON representation of value.
      *
      * @param mixed $value All string data must be UTF-8 encoded.
-     * @param integer $options Option-bitmask
-     * @throws Exception
+     * @param int $options Option-bitmask
      * @return string $json UTF-8 encoded string
+     * @throws Exception
      */
-    private function encode($value, $options = 0)
+    private function encode($value, int $options = 0) : string
     {
         if (is_resource($value)) {
             throw new \InvalidArgumentException('Unsupported type resource');
@@ -54,10 +54,8 @@ class JsonTest extends TestCase
 
     public function testEncodeResource()
     {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Unsupported type'
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageRegExp('*Unsupported type*');
         $this->encode(fopen(__FILE__, 'r'));
     }
 

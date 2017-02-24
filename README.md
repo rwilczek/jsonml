@@ -9,4 +9,4 @@ Provides an XML Schema for JSON-values and a parser to
 The XML Schema is provided as a composer binary,
 and thus will be symlinked into the composer/bin-directory.
 
-This version of jsonxml requires PHP 5.5.+
+This version of jsonxml requires PHP 7.1.+

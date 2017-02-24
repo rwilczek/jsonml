@@ -24,7 +24,7 @@ class ParserTest extends TestCase
 
     public function testImplementation()
     {
-        $this->assertInstanceOf(__NAMESPACE__ . '\Parser', $this->parser);
+        $this->assertInstanceOf(Parser::class, $this->parser);
     }
 
     /**
@@ -54,10 +54,8 @@ class ParserTest extends TestCase
 
     public function testResourceToNode()
     {
-        $this->setExpectedException(
-            __NAMESPACE__ . '\Exception',
-            'Cannot convert'
-        );
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessageRegExp('\'Cannot convert\'');
         $this->parser->encodeXML(fopen(__FILE__, 'r'));
     }
 
@@ -69,7 +67,6 @@ class ParserTest extends TestCase
         $node = $this->parser->encodeXML($value);
         $this->assertIsTypedNode($node, 'array');
         $this->assertSame($value, $this->parser->decodeXML($node));
-
     }
 
     /**
@@ -86,20 +83,16 @@ class ParserTest extends TestCase
     {
         $node = new \DOMElement('string', 'foo', 'http://someNS');
 
-        $this->setExpectedException(
-            __NAMESPACE__ . '\Exception',
-            'Cannot parse unknown namespace'
-        );
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessageRegExp('*Cannot parse unknown namespace*');
         $this->parser->decodeXML($node);
     }
 
     public function testDecodeXMLInvalidNode()
     {
         $node = new \DOMElement('nonsense', 'foo', Parser::NS);
-        $this->setExpectedException(
-            __NAMESPACE__ . '\Exception',
-            'Cannot parse unknown element'
-        );
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessageRegExp('*Cannot parse unknown element*');
         $this->parser->decodeXML($node);
     }
 
@@ -141,18 +134,16 @@ class ParserTest extends TestCase
      */
     public function testValidateElements($value)
     {
-        $this->parser->validate($this->parser->encodeXML($value));
+        $this->parser->validate($this->parser->encodeXML($value)); // must pass without exception!
+        $this->assertTrue(true);
     }
 
     public function testValidationFailure()
     {
         $dom = new \DOMDocument;
         $dom->loadXML('<string>foo</string>'); // invalid or missing namespace here
-
-        $this->setExpectedException(
-            __NAMESPACE__ . '\Exception',
-            'No matching global declaration'
-        );
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessageRegExp('*No matching global declaration*');
 
         $this->parser->validate($dom->documentElement);
     }

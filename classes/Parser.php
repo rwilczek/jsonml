@@ -26,7 +26,7 @@ interface Parser
      * @param mixed $value
      * @return \DOMElement having the json:XML namespace
      */
-    public function encodeXML($value);
+    public function encodeXML($value) : \DOMElement;
 
     /**
      * Convert a json:XML-element to a valid JSON-string

@@ -33,10 +33,11 @@
     ],
 
     "require": {
-        "php":      ">=5.5.0",
+        "php":      ">=7.1.0",
         "ext-dom":  "*"
     },
 
     "require-dev": {
+        "phpunit/phpunit": "*"
     }
 }

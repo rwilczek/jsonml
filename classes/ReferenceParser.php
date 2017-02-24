@@ -37,7 +37,7 @@ class ReferenceParser implements Parser
      */
     public function validate(\DOMElement $node)
     {
-        $errors = function ($number, $msg, $file, $line)
+        $errors = function (int $number, string $msg, string $file, int $line)
         {
             throw new \ErrorException($msg, 0, $number, $file, $line);
         };
@@ -64,7 +64,7 @@ class ReferenceParser implements Parser
      * @return \DOMElement having the json:XML namespace
      * @throws Exception
      */
-    public function encodeXML($value)
+    public function encodeXML($value) : \DOMElement
     {
         if ($this->isJsonNode($value)) {
             return $value;
@@ -116,7 +116,7 @@ class ReferenceParser implements Parser
         }
     }
 
-    private function decodeArray(\DOMElement $array)
+    private function decodeArray(\DOMElement $array) : array
     {
         $result = [];
         foreach ($array->childNodes as $childNode) {
@@ -139,9 +139,9 @@ class ReferenceParser implements Parser
      * Creates and returns an <array>-element from an array
      *
      * @param mixed[] $values
-     * @return \DOMNode
+     * @return \DOMElement
      */
-    private function encodeArray(array $values)
+    private function encodeArray(array $values) : \DOMElement
     {
         if ($this->isAssociative($values)) {
             return $this->encodeObject($values);
@@ -164,9 +164,9 @@ class ReferenceParser implements Parser
      * - the integer-keys do not increase strictly by 1
      *
      * @param mixed[] $values
-     * @return boolean
+     * @return bool
      */
-    private function isAssociative(array $values)
+    private function isAssociative(array $values) : bool
     {
         if (empty($values)) {
             return false;
@@ -177,10 +177,10 @@ class ReferenceParser implements Parser
     /**
      * Creates and returns a <boolean>-Element
      *
-     * @param boolean $value
-     * @return \DOMNode
+     * @param bool $value
+     * @return \DOMElement
      */
-    private function encodeBoolean($value)
+    private function encodeBoolean(bool $value) : \DOMElement
     {
         return $this->createElement($value? 'true': 'false');
     }
@@ -189,9 +189,9 @@ class ReferenceParser implements Parser
      * Creates and returns an <object>-element from an object
      *
      * @param object $object
-     * @return \DOMNode
+     * @return \DOMElement
      */
-    private function encodeObject($object)
+    private function encodeObject($object) : \DOMElement
     {
         if ($object instanceof \JsonSerializable) {
             return $this->encodeXML($object->jsonSerialize());
@@ -211,9 +211,9 @@ class ReferenceParser implements Parser
      * Creates and returns a DOMNode according to the value's type.
      *
      * @param scalar $value
-     * @return \DOMNode
+     * @return \DOMElement
      */
-    private function encodeScalar($value)
+    private function encodeScalar($value) : \DOMElement
     {
         if (is_integer($value) || is_float($value)) {
             return $this->createElement('number', $value);
@@ -224,9 +224,9 @@ class ReferenceParser implements Parser
     /**
      * Creates and returns a <null>-Element
      *
-     * @return \DOMNode
+     * @return \DOMElement
      */
-    private function encodeNull()
+    private function encodeNull() : \DOMElement
     {
         return $this->createElement('null');
     }
@@ -238,7 +238,7 @@ class ReferenceParser implements Parser
      * @param string $value
      * @return \DOMElement
      */
-    private function createElement($name, $value = null)
+    private function createElement(string $name, ?string $value = null) : \DOMElement
     {
         if (is_null($value)) {
             return $this->dom->createElementNS(self::NS, $name);
@@ -250,9 +250,9 @@ class ReferenceParser implements Parser
      * Tells if the given value is a json:XML-element
      *
      * @param mixed $value
-     * @return boolean
+     * @return bool
      */
-    private function isJsonNode($value)
+    private function isJsonNode($value) : bool
     {
         if (!$value instanceof \DOMNode) {
             return false;
